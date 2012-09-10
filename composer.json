@@ -1,7 +1,7 @@
 {
     "name": "mouf/utils.cache.file-cache",
-    "description": "TODO",
-    "keywords": ["security", "user", "user management"],
+    "description": "This package contains a cache mechanism that relies on temporary files.",
+    "keywords": ["mouf", "cache", "file"],
     "homepage": "https://github.com/thecodingmachine/utils.cache.file-cache",
     "type": "library",
     "license": "MIT",
@@ -13,7 +13,9 @@
         }
     ],
     "require": {
-    	"php": ">=5.3.0"
+    	"php": ">=5.3.0",
+    	"mouf/utils.cache.cache-interface": "2.*",
+    	"mouf/utils.log.log_interface": "2.*"
     },
     "autoload": {
         "psr-0": {

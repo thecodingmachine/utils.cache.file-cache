@@ -1,4 +1,5 @@
 <?php
+namespace Mouf\Utils\Cache;
 
 /**
  * This package contains a cache mechanism that relies on temporary files.
