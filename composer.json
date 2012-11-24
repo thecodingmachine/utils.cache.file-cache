@@ -3,7 +3,7 @@
     "description": "This package contains a cache mechanism that relies on temporary files.",
     "keywords": ["mouf", "cache", "file"],
     "homepage": "https://github.com/thecodingmachine/utils.cache.file-cache",
-    "type": "library",
+    "type": "mouf-library",
     "license": "MIT",
     "authors": [
         {
