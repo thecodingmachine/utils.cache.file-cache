@@ -133,7 +133,9 @@ class FileCache implements CacheInterface {
 			$this->log->trace("Purging key '$key' from file cache.");
 		}
 		$filename = $this->getFileName($key);
-		unlink($filename);
+		if (file_exists($filename)) {
+			unlink($filename);
+		}
 	}
 	
 	/**
