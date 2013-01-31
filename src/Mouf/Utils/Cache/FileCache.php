@@ -19,6 +19,13 @@ class FileCache implements CacheInterface {
 	 * @var int
 	 */
 	public $defaultTimeToLive;
+
+	/**
+	 * A prefix to be added to all the keys of the cache. Very useful to avoid conflicting name between different instances.
+	 *
+	 * @var string
+	 */
+	public $prefix = "";
 	
 	/**
 	 * The logger used to trace the cache activity.
@@ -148,7 +155,10 @@ class FileCache implements CacheInterface {
 		}
 		$files = glob($this->getDirectory()."*");
 		foreach ($files as $filename) {
-		    unlink($filename);
+			$prefixFile = str_replace(array("/", "\\", ":", "_"), array("_s_", "_b_", "_d_", "___"), $this->prefix);
+			if (strpos(basename($filename), $prefixFile) === 0) {
+		    	unlink($filename);
+			}
 		}
 	}
 	
@@ -168,7 +178,7 @@ class FileCache implements CacheInterface {
 	
 	private function getFileName($key) {
 		// Remove any "/" and ":" from the name, and replace those with "_" ...
-		$key = str_replace(array("/", "\\", ":", "_"), array("_s_", "_b_", "_d_", "___"), $key);
+		$key = str_replace(array("/", "\\", ":", "_"), array("_s_", "_b_", "_d_", "___"), $this->prefix.$key);
 		
 		return $this->getDirectory().$key.".cache";
 	}

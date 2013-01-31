@@ -22,6 +22,14 @@ if (!$moufManager->instanceExists("fileCacheService")) {
 	if ($moufManager->instanceExists("errorLogLogger")) {
 		$fileCacheService->getProperty("log")->setValue($moufManager->getInstanceDescriptor("errorLogLogger"));
 	}
+} else {
+	$fileCacheService = $moufManager->getInstanceDescriptor("fileCacheService");
+}
+
+$configManager = $moufManager->getConfigManager();
+$constants = $configManager->getMergedConstants();
+if (isset($constants['ROOT_URL'])) {
+	$fileCacheService->getProperty('prefix')->setValue('ROOT_URL')->setOrigin('config');
 }
 
 // Let's rewrite the MoufComponents.php file to save the component
