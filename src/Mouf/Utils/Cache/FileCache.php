@@ -1,5 +1,6 @@
 <?php
 namespace Mouf\Utils\Cache;
+use Mouf\Utils\Log\LogInterface;
 
 /**
  * This package contains a cache mechanism that relies on temporary files.
@@ -8,6 +9,7 @@ namespace Mouf\Utils\Cache;
  * 
  * @Component
  */
+
 class FileCache implements CacheInterface {
 	
 	/**
