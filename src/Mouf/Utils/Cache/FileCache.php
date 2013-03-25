@@ -158,7 +158,7 @@ class FileCache implements CacheInterface {
 		$files = glob($this->getDirectory()."*");
 		foreach ($files as $filename) {
 			$prefixFile = str_replace(array("/", "\\", ":", "_"), array("_s_", "_b_", "_d_", "___"), $this->prefix);
-			if (strpos(basename($filename), $prefixFile) === 0) {
+			if (empty($prefixFile) || strpos(basename($filename), $prefixFile) === 0) {
 		    	unlink($filename);
 			}
 		}
