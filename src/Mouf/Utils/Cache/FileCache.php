@@ -1,15 +1,14 @@
 <?php
 namespace Mouf\Utils\Cache;
 use Mouf\Utils\Log\LogInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * This package contains a cache mechanism that relies on temporary files.
  *
  * TODO: make a global garbage collector that passes sometimes (like sessions in PHP)
  * 
- * @Component
  */
-
 class FileCache implements CacheInterface {
 	
 	/**
@@ -31,9 +30,9 @@ class FileCache implements CacheInterface {
 	
 	/**
 	 * The logger used to trace the cache activity.
+	 * Supports both PSR3 compatible logger and old Mouf logger for compatibility reasons.
 	 *
-	 * @Property
-	 * @var LogInterface
+	 * @var LoggerInterface|LogInterface
 	 */
 	public $log;
 
@@ -77,20 +76,32 @@ class FileCache implements CacheInterface {
 				$value = unserialize($contents);
 				//$this->log->trace("Retrieving key '$key' from file cache: value returned:".var_export($value, true));
 				if ($this->log) {
-					$this->log->trace("Retrieving key '$key' from file cache.");
+					if ($this->log instanceof LoggerInterface) {
+						$this->log->info("Retrieving key '{key}' from file cache.", array('key'=>$key));
+					} else {
+						$this->log->trace("Retrieving key '$key' from file cache.");
+					}						
 				}
 				return $value;
 			} else {
 				fclose($fp);
 				unlink($filename);
 				if ($this->log) {
-					$this->log->trace("Retrieving key '$key' from file cache: key outdated, cache miss.");
+					if ($this->log instanceof LoggerInterface) {
+						$this->log->info("Retrieving key '{key}' from file cache: key outdated, cache miss.", array('key'=>$key));
+					} else {
+						$this->log->trace("Retrieving key '$key' from file cache: key outdated, cache miss.");
+					}
 				}
 				return null;
 			}
 		} else {
 			if ($this->log) {
-				$this->log->trace("Retrieving key '$key' from file cache: cache miss.");
+				if ($this->log instanceof LoggerInterface) {
+					$this->log->info("Retrieving key '{key}' from file cache: cache miss.", array('key'=>$key));
+				} else {
+					$this->log->trace("Retrieving key '$key' from file cache: cache miss.");
+				}
 			}
 			return null;
 		}
@@ -107,7 +118,11 @@ class FileCache implements CacheInterface {
 		$filename = $this->getFileName($key);
 		//$this->log->trace("Storing value in cache: key '$key', value '".var_export($value, true)."'");
 		if ($this->log) {
-			$this->log->trace("Storing value in cache: key '$key'");
+			if ($this->log instanceof LoggerInterface) {
+				$this->log->info("Storing value in cache: key '{key}'", array('key'=>$key));
+			} else {
+				$this->log->trace("Storing value in cache: key '$key'");
+			}
 		}
 		
 		if (!is_writable($filename)) {
@@ -139,7 +154,11 @@ class FileCache implements CacheInterface {
 	 */
 	public function purge($key) {
 		if ($this->log) {
-			$this->log->trace("Purging key '$key' from file cache.");
+			if ($this->log instanceof LoggerInterface) {
+				$this->log->info("Purging key '{key}' from file cache.", array('key'=>$key));
+			} else {
+				$this->log->trace("Purging key '$key' from file cache.");
+			}
 		}
 		$filename = $this->getFileName($key);
 		if (file_exists($filename)) {
@@ -153,7 +172,11 @@ class FileCache implements CacheInterface {
 	 */
 	public function purgeAll() {
 		if ($this->log) {
-			$this->log->trace("Purging the whole file cache.");
+			if ($this->log instanceof LoggerInterface) {
+				$this->log->info("Purging the whole file cache.");
+			} else {
+				$this->log->trace("Purging the whole file cache.");
+			}
 		}
 		$files = glob($this->getDirectory()."*");
 		foreach ($files as $filename) {

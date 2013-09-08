@@ -1,36 +1,40 @@
 {
-    "name": "mouf/utils.cache.file-cache",
-    "description": "This package contains a cache mechanism that relies on temporary files.",
-    "keywords": ["mouf", "cache", "file"],
-    "homepage": "https://github.com/thecodingmachine/utils.cache.file-cache",
-    "type": "mouf-library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "David Négrier",
-            "email": "d.negrier@thecodingmachine.com",
-            "homepage": "http://mouf-php.com"
-        }
-    ],
-    "require": {
-    	"php": ">=5.3.0",
-    	"mouf/utils.cache.cache-interface": "2.*",
-    	"mouf/utils.log.log_interface": "2.*"
-    },
-    "autoload": {
-        "psr-0": {
-            "Mouf": "src/"
-        }
-    },
-    "extra": {
-    	"mouf": {
-	    	"install": [
-	    		{
-	    			"type": "file",
-	    			"file": "src/install.php"
-	    		}
-	    	],
-	    	"logo": "logo.png"
-    	}
-    }
+	"name" : "mouf/utils.cache.file-cache",
+	"description" : "This package contains a cache mechanism that relies on temporary files.",
+	"type" : "mouf-library",
+	"authors" : [{
+			"name" : "David Négrier",
+			"email" : "d.negrier@thecodingmachine.com",
+			"homepage" : "http://mouf-php.com"
+		}
+	],
+	"keywords" : [
+		"mouf",
+		"cache",
+		"file"
+	],
+	"homepage" : "https://github.com/thecodingmachine/utils.cache.file-cache",
+	"license" : [
+		"MIT"
+	],
+	"require" : {
+		"php" : ">=5.3.0",
+		"psr/log" : "~1.0",
+		"mouf/utils.cache.cache-interface" : "~2.0"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"Mouf" : "src/"
+		}
+	},
+	"extra" : {
+		"mouf" : {
+			"install" : [{
+					"file" : "src/install.php",
+					"type" : "file"
+				}
+			],
+			"logo" : "logo.png"
+		}
+	}
 }

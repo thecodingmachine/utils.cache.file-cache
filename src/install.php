@@ -19,8 +19,8 @@ if (!$moufManager->instanceExists("fileCacheService")) {
 	$fileCacheService = $moufManager->createInstance("Mouf\\Utils\\Cache\\FileCache");
 	$fileCacheService->setName("fileCacheService");
 	$fileCacheService->getProperty("defaultTimeToLive")->setValue(3600);
-	if ($moufManager->instanceExists("errorLogLogger")) {
-		$fileCacheService->getProperty("log")->setValue($moufManager->getInstanceDescriptor("errorLogLogger"));
+	if ($moufManager->instanceExists("psr.errorLogLogger")) {
+		$fileCacheService->getProperty("log")->setValue($moufManager->getInstanceDescriptor("psr.errorLogLogger"));
 	}
 } else {
 	$fileCacheService = $moufManager->getInstanceDescriptor("fileCacheService");
