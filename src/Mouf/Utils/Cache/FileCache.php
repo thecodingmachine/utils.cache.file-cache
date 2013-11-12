@@ -180,7 +180,7 @@ class FileCache implements CacheInterface {
 		}
 		$files = glob($this->getDirectory()."*");
 		foreach ($files as $filename) {
-			$prefixFile = str_replace(array("/", "\\", ":", "_"), array("_s_", "_b_", "_d_", "___"), $this->prefix);
+			$prefixFile = str_replace(array("_", "/", "\\", ":"), array("___", "_s_", "_b_", "_d_"), $this->prefix);
 			if (empty($prefixFile) || strpos(basename($filename), $prefixFile) === 0) {
 		    	unlink($filename);
 			}
@@ -203,9 +203,24 @@ class FileCache implements CacheInterface {
 	
 	private function getFileName($key) {
 		// Remove any "/" and ":" from the name, and replace those with "_" ...
-		$key = str_replace(array("/", "\\", ":", "_"), array("_s_", "_b_", "_d_", "___"), $this->prefix.$key);
+		$key = str_replace(array("_", "/", "\\", ":"), array("___", "_s_", "_b_", "_d_"), $this->prefix.$key);
 		
-		return $this->getDirectory().$key.".cache";
+		// Windows full path need to be less than 260 characters. We need to limit the size of the filename
+		$fullPath = $this->getDirectory().$key.".cache";
+		
+		if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+			return $fullPath;
+		}
+		
+		// Approximative value due to NTFS short file names (e.g. PROGRA~1) that get longer when evaluated by Windows
+		if (strlen($fullPath)<160) {
+			return $fullPath;
+		}
+		
+		$prefix = str_replace(array("_", "/", "\\", ":"), array("___", "_s_", "_b_", "_d_"), $this->prefix);
+		
+		// If we go above 160 characters, let's transform the key into a md5
+		return $this->getDirectory().$prefix.md5($key).'.cache';
 	}
 }
 ?>
