@@ -180,8 +180,10 @@ class FileCache implements CacheInterface {
 			}
 		}
 		$files = glob($this->getDirectory()."*");
+        error_log(var_export($files, true));
+        $prefixFile = str_replace(array("_", "/", "\\", ":"), array("___", "_s_", "_b_", "_d_"), $this->prefix);
+        error_log(var_export($prefixFile, true));
 		foreach ($files as $filename) {
-			$prefixFile = str_replace(array("_", "/", "\\", ":"), array("___", "_s_", "_b_", "_d_"), $this->prefix);
 			if (empty($prefixFile) || strpos(basename($filename), $prefixFile) === 0) {
 		    	unlink($filename);
 			}
