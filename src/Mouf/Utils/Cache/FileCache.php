@@ -161,6 +161,7 @@ class FileCache implements CacheInterface {
 			}
 		}
 		$filename = $this->getFileName($key);
+		error_log($filename);
 		if (file_exists($filename)) {
 			unlink($filename);
 		}
@@ -208,10 +209,6 @@ class FileCache implements CacheInterface {
 		// Windows full path need to be less than 260 characters. We need to limit the size of the filename
 		$fullPath = $this->getDirectory().$key.".cache";
 		
-		if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-			return $fullPath;
-		}
-		
 		// Approximative value due to NTFS short file names (e.g. PROGRA~1) that get longer when evaluated by Windows
 		if (strlen($fullPath)<160) {
 			return $fullPath;
@@ -220,6 +217,7 @@ class FileCache implements CacheInterface {
 		$prefix = str_replace(array("_", "/", "\\", ":"), array("___", "_s_", "_b_", "_d_"), $this->prefix);
 		
 		// If we go above 160 characters, let's transform the key into a md5
+		
 		return $this->getDirectory().$prefix.md5($key).'.cache';
 	}
 }
