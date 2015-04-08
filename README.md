@@ -1,3 +1,9 @@
+[![Latest Stable Version](https://poser.pugx.org/mouf/utils.cache.file-cache/v/stable.svg)](https://packagist.org/packages/mouf/utils.cache.file-cache)
+[![Total Downloads](https://poser.pugx.org/mouf/utils.cache.file-cache/downloads.svg)](https://packagist.org/packages/mouf/utils.cache.file-cache)
+[![Latest Unstable Version](https://poser.pugx.org/mouf/utils.cache.file-cache/v/unstable.svg)](https://packagist.org/packages/mouf/utils.cache.file-cache)
+[![License](https://poser.pugx.org/mouf/utils.cache.file-cache/license.svg)](https://packagist.org/packages/mouf/utils.cache.file-cache)
+[![Build Status](https://travis-ci.org/thecodingmachine/utils.cache.file-cache.svg)](https://travis-ci.org/thecodingmachine/utils.cache.file-cache)
+
 Mouf's file cache service
 =========================
 
