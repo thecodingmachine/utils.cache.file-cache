@@ -82,7 +82,9 @@ class PhpFileCache extends FileCache {
 				$this->log->trace("Storing value in cache: key '$key'");
 			}
 		}
-		
+
+        $oldUmask = umask(0);
+
 		if (!is_writable($filename)) {
 			if (!file_exists($this->getDirectory())) {
 				mkdir($this->getDirectory(), 0777, true);
@@ -116,6 +118,10 @@ class PhpFileCache extends FileCache {
 		$code   = sprintf('<?php return %s;', $data);
 
 		file_put_contents($filename, $code);
+        // Cache is shared with group, not with the rest of the world.
+        chmod($filename, 0660);
+
+        umask($oldUmask);
 	}
 
 }
