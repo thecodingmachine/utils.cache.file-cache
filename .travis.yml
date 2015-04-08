@@ -6,6 +6,7 @@ php:
 before_script:
  - wget http://getcomposer.org/composer.phar
  - php composer.phar install --dev --no-interaction
+ - phpenv config-add php-travis.ini
 
 script:
  - mkdir -p build/logs

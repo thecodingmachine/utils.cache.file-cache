@@ -126,6 +126,8 @@ class FileCache implements CacheInterface {
 				$this->log->trace("Storing value in cache: key '$key'");
 			}
 		}
+
+        $oldUmask = umask(0);
 		
 		if (!is_writable($filename)) {
 			if (!file_exists($this->getDirectory())) {
@@ -147,6 +149,10 @@ class FileCache implements CacheInterface {
 		fwrite($fp, $timeOut."\n");
 		fwrite($fp, serialize($value));
 		fclose($fp);
+        // Cache is shared with group, not with the rest of the world.
+        chmod($filename, 0660);
+
+        umask($oldUmask);
 	}
 	
 	/**
