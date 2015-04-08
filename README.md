@@ -2,7 +2,9 @@
 [![Total Downloads](https://poser.pugx.org/mouf/utils.cache.file-cache/downloads.svg)](https://packagist.org/packages/mouf/utils.cache.file-cache)
 [![Latest Unstable Version](https://poser.pugx.org/mouf/utils.cache.file-cache/v/unstable.svg)](https://packagist.org/packages/mouf/utils.cache.file-cache)
 [![License](https://poser.pugx.org/mouf/utils.cache.file-cache/license.svg)](https://packagist.org/packages/mouf/utils.cache.file-cache)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thecodingmachine/utils.cache.file-cache/badges/quality-score.png?b=2.2)](https://scrutinizer-ci.com/g/thecodingmachine/utils.cache.file-cache/?branch=2.2)
 [![Build Status](https://travis-ci.org/thecodingmachine/utils.cache.file-cache.svg)](https://travis-ci.org/thecodingmachine/utils.cache.file-cache)
+[![Coverage Status](https://coveralls.io/repos/thecodingmachine/utils.cache.file-cache/badge.svg)](https://coveralls.io/r/thecodingmachine/utils.cache.file-cache)
 
 Mouf's file cache service
 =========================
