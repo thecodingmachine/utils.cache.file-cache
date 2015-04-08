@@ -28,6 +28,11 @@
 			"Mouf\\Utils\\Cache\\" : "src/"
 		}
 	},
+    "autoload-dev" : {
+		"psr-4" : {
+	  		"Mouf\\Utils\\Cache\\" : "tests/"
+		}
+  	},
 	"extra" : {
 		"mouf" : {
 			"install" : [{

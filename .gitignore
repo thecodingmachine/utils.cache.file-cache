@@ -1,1 +1,4 @@
 *~
+tests/cachedir/
+mouf/
+vendor/

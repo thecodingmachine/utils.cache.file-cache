@@ -6,6 +6,8 @@ use Psr\Log\LoggerInterface;
 /**
  * This package contains a cache mechanism that relies on temporary files.
  *
+ * IMPORTANT: unless you have a good reason to do otherwise, you should use the PhpFileCache instead of this class.
+ *
  * TODO: make a global garbage collector that passes sometimes (like sessions in PHP)
  * 
  */
@@ -187,7 +189,7 @@ class FileCache implements CacheInterface {
 		}
 	}
 	
-	private function getDirectory() {
+	protected function getDirectory() {
 
 		$dir = "";
 		if ($this->relativeToSystemTempDirectory) {
@@ -200,8 +202,8 @@ class FileCache implements CacheInterface {
 		}
 		return $dir;
 	}
-	
-	private function getFileName($key) {
+
+	protected function getFileName($key) {
 		// Remove any "/" and ":" from the name, and replace those with "_" ...
 		$key = str_replace(array("_", "/", "\\", ":"), array("___", "_s_", "_b_", "_d_"), $this->prefix.$key);
 		
@@ -220,4 +222,3 @@ class FileCache implements CacheInterface {
 		return $this->getDirectory().$prefix.md5($key).'.cache';
 	}
 }
-?>
