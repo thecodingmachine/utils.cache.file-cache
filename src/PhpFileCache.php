@@ -39,7 +39,7 @@ class PhpFileCache extends FileCache {
 					$this->log->trace("Retrieving key '$key' from file cache: cache miss.");
 				}
 			}
-			return false;
+			return null;
 		}
 		$value = include $filename;
 
@@ -51,7 +51,7 @@ class PhpFileCache extends FileCache {
 					$this->log->trace("Retrieving key '$key' from file cache: key outdated, cache miss.");
 				}
 			}
-			return false;
+			return null;
 		}
 
 		if ($this->log) {
