@@ -101,23 +101,21 @@ class PhpFileCache extends FileCache {
 			$timeOut = time() + $timeToLive;
 		}
 
-		if (is_object($value) && !method_exists($value, '__set_state')) {
-			throw new \InvalidArgumentException(
-				"Invalid argument given, PhpFileCache only allows objects that implement __set_state() " .
-				"and fully support var_export(). You can use the FileCache to save arbitrary object " .
-				"graphs using serialize()/deserialize()."
-			);
-		}
-
 		$data = array(
 			'lifetime'  => $timeOut,
 			'data'      => $value
 		);
 
-		$data  = var_export($data, true);
-		$code   = sprintf('<?php return %s;', $data);
+        $serializeData = serialize($data);
+        if(strpos($serializeData, 'r:') !== false){
+            $code   = sprintf('<?php return unserialize(%s);', var_export($serializeData, true));
+            file_put_contents($filename, $code);
+        }else{
+            $data  = var_export($data, true);
+            $code   = sprintf('<?php return %s;', $data);
+            file_put_contents($filename, $code);
+        }
 
-		file_put_contents($filename, $code);
         // Cache is shared with group, not with the rest of the world.
         chmod($filename, 0660);
 
