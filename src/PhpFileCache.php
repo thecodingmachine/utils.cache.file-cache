@@ -107,7 +107,7 @@ class PhpFileCache extends FileCache {
 		);
 
         $serializeData = serialize($data);
-        if(strpos($serializeData, 'r:') !== false){
+        if(strpos($serializeData, 'r:') !== false || (is_object($value) && !method_exists($value, '__set_state'))){
             $code   = sprintf('<?php return unserialize(%s);', var_export($serializeData, true));
             file_put_contents($filename, $code);
         }else{
