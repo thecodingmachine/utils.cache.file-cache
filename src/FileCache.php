@@ -64,8 +64,11 @@ class FileCache implements CacheInterface {
 		$filename = $this->getFileName($key);
 
 		if (is_readable($filename)) {
-			$fp = fopen($filename, "r");
-			$timeout = fgets($fp);
+            $fp = fopen($filename, "r");
+            if ($fp === false) {//File may have been deleted between fopen and fgets
+                return null;
+            }
+            $timeout = fgets($fp);
 			
 			if ($timeout > time() || $timeout==0) {
 				$contents = "";
