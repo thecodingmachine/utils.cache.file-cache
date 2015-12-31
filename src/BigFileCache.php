@@ -7,22 +7,24 @@ use Psr\Log\LoggerInterface;
 /**
  * This package contains a cache mechanism that relies on temporary files.
  * It is very close to the "classic" FileCache, but it will create a subdirectory system in order
- * to avoid having all files inside the same folders.
- *
+ * to avoid having all files inside the same folders.<br/>
+ *<br/>
  * One important property is $hashDept. It sets the length of the subdirectory.
  * The higher it is, the more subfolders will be created, but the lesser cache file they will contain.
  * Max count of subfolders is 16^$hashDepth, so you cannot set a depth higher then 4 as it could create
- * more than 1 000 000 subfolders.
- *
- * As an example :
- *    - 1 000 000 items are stored into 256 subfolders for $hashDepth == 2, witch means around 4 000 files per folder
- *    - 1 000 000 items are stored into 4096 subfolders for $hashDepth == 3, witch means around 250 files per folder
- *
+ * more than 1 000 000 subfolders.<br/>
+ *<br/>
+ * As an example :<br/>
+ * <ul>
+ *    <li>1 000 000 items are stored into 256 subfolders for $hashDepth == 2, witch means around 4 000 files per folder</li>
+ *    <li>1 000 000 items are stored into 4096 subfolders for $hashDepth == 3, witch means around 250 files per folder</li>
+ *</ul>
+ *<br/>
  * If you consider caching more than 1 000 000 items, you should consider another cache service
- *
- * WARNING : YOU CANNOT SHARE HIS FOLDER WITH OTHER CACHE SYSTEMS, or even put any other file
+ *<br/>
+ *<br/>
+ * <b><u>WARNING:</u> YOU CANNOT SHARE HIS FOLDER WITH OTHER CACHE SYSTEMS<b>, or even put any other file
  * into the $cacheDirectory, as it will remove the whole folder when purged.
- * 
  */
 class BigFileCache implements CacheInterface {
 	
@@ -80,14 +82,8 @@ class BigFileCache implements CacheInterface {
     }
 
     /**
-     * Must be between 1 and 4
-     * Sets the length of the subdirectory. The higher it is, the more subfolders will be created, but the lesser cache file they will contain.
-     * Max count of subfolders is 16^$hashDepth, so you cannot set a depth higher then 4 as it could create more than 1 000 000 subfolders
-     * As an example :
-     *    - 1 000 000 items are stored into 256 subfolders for $hashDepth == 2, witch means around 4 000 files per folder
-     *    - 1 000 000 items are stored into 4096 subfolders for $hashDepth == 3, witch means around 250 files per folder
-     *
-     * If you consider caching more than 1 000 000 items, you should consider another cache service
+     * Sets the length of the subdirectory.
+     * See Class documentation for more details
      *
      * @param int $hashDepth
      */
