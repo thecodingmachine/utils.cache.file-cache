@@ -190,7 +190,7 @@ class FileCache implements CacheInterface {
 			}
 		}
 		$files = glob($this->getDirectory()."*");
-        if ($files !== false){// some file systems wont distinguish between empty match and an error
+        if (false !== $files){// some file systems wont distinguish between empty match and an error
             $prefixFile = str_replace(array("_", "/", "\\", ":"), array("___", "_s_", "_b_", "_d_"), $this->prefix);
             foreach ($files as $filename) {
                 if (empty($prefixFile) || strpos(basename($filename), $prefixFile) === 0) {
