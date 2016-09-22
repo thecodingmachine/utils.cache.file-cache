@@ -70,6 +70,7 @@ class FileCache implements CacheInterface {
             if ($fp === false) {//File may have been deleted between is_readable and fopen
                 return null;
             }
+			flock($fp, LOCK_SH);
             $timeout = fgets($fp);
 			
 			if ($timeout > time() || $timeout==0) {
@@ -77,6 +78,7 @@ class FileCache implements CacheInterface {
 				while (!feof($fp)) {
 				  $contents .= fread($fp, 65536);
 				}
+				flock($fp, LOCK_UN);
 				fclose($fp);
 				$value = unserialize($contents);
 				//$this->log->trace("Retrieving key '$key' from file cache: value returned:".var_export($value, true));
@@ -89,6 +91,7 @@ class FileCache implements CacheInterface {
 				}
 				return $value;
 			} else {
+				flock($fp, LOCK_UN);
 				fclose($fp);
 				unlink($filename);
 				if ($this->log) {
@@ -149,8 +152,11 @@ class FileCache implements CacheInterface {
 		}
 		
 		$fp = fopen($filename, "w");
+		flock($fp, LOCK_EX);
 		fwrite($fp, $timeOut."\n");
 		fwrite($fp, serialize($value));
+		fflush($fp);
+		flock($fp, LOCK_UN);
 		fclose($fp);
         // Cache is shared with group, not with the rest of the world.
         chmod($filename, 0660);
